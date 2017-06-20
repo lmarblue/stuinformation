@@ -1,7 +1,7 @@
 CC=gcc
 AFLAGS=-Wall -g
 LDFLAGS= -lmysqlclient
-OBJS= add.cgi del.cgi mod.cgi sel.cgi
+OBJS= add.cgi del.cgi mod.cgi sel.cgi addSC.cgi
 
 all:$(OBJS)
 
@@ -11,5 +11,6 @@ $(OBJS):%.cgi:%.c
 .PHONY:clean
 clean:
 	rm ./*.cgi
-
+install:
+	cp *.cgi /usr/lib/cgi-bin/sx/
 

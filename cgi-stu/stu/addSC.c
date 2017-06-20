@@ -8,31 +8,42 @@ int cgiMain()
 {
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
 
-	char name[32] = "\0";
-	char age[16] = "\0";
-	char stuId[32] = "\0";
+	char  scm[16] = "\0";
+	char scname[30] = "\0";
+	char location[20] = "\0";
+  char president[10]="\0";
+	char bdate="null";
 	int status = 0;
 
-	status = cgiFormString("name",  name, 32);
+	status = cgiFormString("scm",  scm, 16);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get name error!\n");
+		fprintf(cgiOut, "get scm error!\n");
 		return 1;
 	}
 
-	status = cgiFormString("age",  age, 16);
+	status = cgiFormString("scname",  scname, 30);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get age error!\n");
+		fprintf(cgiOut, "get scname error!\n");
 		return 1;
 	}
 
-	status = cgiFormString("stuId",  stuId, 32);
+	status = cgiFormString("location",  location, 20);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get stuId error!\n");
+		fprintf(cgiOut, "get location  error!\n");
 		return 1;
 	}
+
+
+	status = cgiFormString("president",  president, 20);
+	if (status != cgiFormSuccess)
+	{
+		fprintf(cgiOut, "get president error!\n");
+		return 1;
+	}
+
 
 	//fprintf(cgiOut, "name = %s, age = %s, stuId = %s\n", name, age, stuId);
 
@@ -49,7 +60,7 @@ int cgiMain()
 	}
 
 	//连接数据库
-	db = mysql_real_connect(db, "127.0.0.1", "root", "123456", "stu",  3306, NULL, 0);
+	db = mysql_real_connect(db, "127.0.0.1", "root", "123456", "st",  3306, NULL, 0);
 	if (db == NULL)
 	{
 		fprintf(cgiOut,"mysql_real_connect fail:%s\n", mysql_error(db));
@@ -59,20 +70,20 @@ int cgiMain()
 
 
 
-	strcpy(sql, "create table stu(id int not null primary key, name varchar(20) not null, age int not null)");
+	strcpy(sql, "create table School(scm smallint  primary key,scname varchar(30) not null,location varchar(20),president varchar(10))");
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
 		if (ret != 1)
 		{
 			fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
 			mysql_close(db);
-			return -1;
+			return ;
 		}
 	}
 
 
 
-	sprintf(sql, "insert into stu values(%d, '%s', %d)", atoi(stuId), name, atoi(age));
+	sprintf(sql, "insert into School values('%s', '%s','%s','%s')", scm, scname,location,president );
 	if (mysql_real_query(db, sql, strlen(sql) + 1) != 0)
 	{
 		fprintf(cgiOut, "%s\n", mysql_error(db));
@@ -80,7 +91,7 @@ int cgiMain()
 		return -1;
 	}
 
-	fprintf(cgiOut, "add student ok!\n");
+	fprintf(cgiOut, "add School ok!\n");
 	mysql_close(db);
 	return 0;
 }
