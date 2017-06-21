@@ -36,11 +36,11 @@ int cgiMain()
 
 	if (acno[0] == '*')
 	{
-		sprintf(sql, "select acno,acname,sdept from academy where fl is null");
+		sprintf(sql, "select acno,acname,sdept from academy where fl='1'");
 	}
 	else
 	{
-		sprintf(sql, "select acno,acname,sdept from academy where acno = '%s' and fl is null", acno);
+		sprintf(sql, "select acno,acname,sdept from academy where acno = '%s' and fl='1'", acno);
 	}
 
 

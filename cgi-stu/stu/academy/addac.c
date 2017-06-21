@@ -8,41 +8,33 @@ int cgiMain()
 {
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
 
-	char  scm[16] = "\0";
-	char scname[30] = "\0";
-	char location[20] = "\0";
-  char president[10]="\0";
+	char  acno[32] = "\0";
+	char  acname[32] = "\0";
+	char  sdept[32] = "\0";
+	//char fl[8] = "\0";
+  //char president[10]="\0";
 	int status = 0;
 
-	status = cgiFormString("scm",  scm, 16);
+	status = cgiFormString("acno",  acno, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get scm error!\n");
+		fprintf(cgiOut, "get acno error!\n");
 		return 1;
 	}
 
-	status = cgiFormString("scname",  scname, 30);
+	status = cgiFormString("acname",  acname, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get scname error!\n");
+		fprintf(cgiOut, "get acname error!\n");
 		return 1;
 	}
 
-	status = cgiFormString("location",  location, 20);
+	status = cgiFormString("sdept",  sdept, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get location  error!\n");
+		fprintf(cgiOut, "get sdept  error!\n");
 		return 1;
 	}
-
-
-	status = cgiFormString("president",  president, 20);
-	if (status != cgiFormSuccess)
-	{
-		fprintf(cgiOut, "get president error!\n");
-		return 1;
-	}
-
 
 	//fprintf(cgiOut, "name = %s, age = %s, stuId = %s\n", name, age, stuId);
 
@@ -70,20 +62,20 @@ int cgiMain()
 
 
 
-	strcpy(sql, "create table School(scm smallint  primary key,scname varchar(30) not null,location varchar(20),president varchar(10)) character set = utf8;");
+	strcpy(sql, "create table academy(acno varchar(32)  primary key,acname varchar(32) nou null,sdept varchar(32),fl varchar(8))character set = utf8;");
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
 		if (ret != 1)
 		{
 			fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
 			mysql_close(db);
-			return ;
+			return -1;
 		}
 	}
 
 
 
-	sprintf(sql, "insert into School values('%s', '%s','%s','%s',null)", scm, scname,location,president );
+	sprintf(sql, "insert into academy values('%s', '%s', '%s','1')", acno,acname,sdept );
 	if (mysql_real_query(db, sql, strlen(sql) + 1) != 0)
 	{
 		fprintf(cgiOut, "%s\n", mysql_error(db));
@@ -91,7 +83,7 @@ int cgiMain()
 		return -1;
 	}
 
-	fprintf(cgiOut, "add School ok!\n");
+	fprintf(cgiOut, "add academy ok!\n");
 	mysql_close(db);
 	return 0;
 }

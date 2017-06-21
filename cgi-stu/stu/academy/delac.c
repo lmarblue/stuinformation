@@ -10,15 +10,15 @@ int cgiMain()
 
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
 
-	char scm[16]= "\0";
+	char acno[32]= "\0";
 	char flag[8]="\0";
 	int status=0;
 
 
-	status = cgiFormString("scm",  scm, 16);
+	status = cgiFormString("acno",  acno, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get scm error!\n");
+		fprintf(cgiOut, "get acno error!\n");
 		return 1;
 	}
 
@@ -53,12 +53,10 @@ int cgiMain()
 	 	mysql_close(db);
 	 	return -1;
 	 }
+	  //fprintf(cgiOut, "scm=%s ,flag=%s \n", scm,flag);
 
-   //fprintf(cgiOut, "scm=%s ,flag=%s \n", scm,flag);
-
-	 if(flag[0]== '1'){
-
-	 	sprintf(sql, "delete from School where scm = '%s' ", scm);
+	 if(flag[0]== 1){
+	 	sprintf(sql, "delete from academy where acno = '%s' ", acno);
 	 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	 	{
 	 		fprintf(cgiOut,"mysql_real_query fail11:%s\n", mysql_error(db));
@@ -66,7 +64,7 @@ int cgiMain()
 	 		return -1;
 	 	}
 	 }else{
-	 	sprintf(sql, "update School set fl = '0' where scm='%s' ",scm);
+	 	sprintf(sql, "update academy set fl= '0'");
 	 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	 	{
 	 		fprintf(cgiOut,"mysql_real_query fail22:%s\n", mysql_error(db));
@@ -76,7 +74,7 @@ int cgiMain()
 	 }
 
 
-	 fprintf(cgiOut, "delete School ok!\n");
+	 fprintf(cgiOut, "delete academy ok!\n");
 	 mysql_close(db);
 
 	return 0;
