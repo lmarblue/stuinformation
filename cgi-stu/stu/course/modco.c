@@ -6,33 +6,34 @@
 
 int cgiMain()
 {
+
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
 
-	char  acno[32] = "\0";
-	char  acname[32] = "\0";
-	char  sdept[32] = "\0";
-	//char fl[8] = "\0";
-  //char president[10]="\0";
-	int status = 0;
 
-	status = cgiFormString("acno",  acno, 32);
+	char  cno[32] = "\0";
+	char  cname[32] = "\0";
+	char  credit[32] = "\0";
+  int status = 0;
+
+
+  status = cgiFormString("cno",  cno, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get acno error!\n");
+		fprintf(cgiOut, "get cno error!\n");
 		return 1;
 	}
 
-	status = cgiFormString("acname",  acname, 32);
+	status = cgiFormString("cname",  cname, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get acname error!\n");
+		fprintf(cgiOut, "get cname error!\n");
 		return 1;
 	}
 
-	status = cgiFormString("sdept",  sdept, 32);
+	status = cgiFormString("credit",  credit, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get sdept  error!\n");
+		fprintf(cgiOut, "get credit  error!\n");
 		return 1;
 	}
 
@@ -61,29 +62,17 @@ int cgiMain()
 	}
 
 
-
-	strcpy(sql, "create table academy(acno varchar(32)  primary key,acname varchar(32) nou null,sdept varchar(32) fl varchar(8))character set = utf8;");
+	sprintf(sql, "update course set cname='%s', credit='%s'  where cno ='%s' ", cname,credit,cno);
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
-		if (ret != 1)
-		{
-			fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
-			mysql_close(db);
-			return -1;
-		}
-	}
-
-
-
-	sprintf(sql, "insert into academy values('%s', '%s', '%s','1')", acno,acname,sdept );
-	if (mysql_real_query(db, sql, strlen(sql) + 1) != 0)
-	{
-		fprintf(cgiOut, "%s\n", mysql_error(db));
+		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
 		mysql_close(db);
 		return -1;
 	}
 
-	fprintf(cgiOut, "add academy ok!\n");
+
+
+	fprintf(cgiOut, "update student ok!\n");
 	mysql_close(db);
 	return 0;
 }
