@@ -9,9 +9,9 @@ int cgiMain()
 
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
 
-	char  acno[32] = "\0";
+	char acno[32] = "\0";
 	char  acname[32]= "\0";
-	char  sdept[32] = "\0";
+	char sdept[32] = "\0";
   int status = 0;
 
 	status = cgiFormString("acno",  acno, 32);
@@ -31,7 +31,7 @@ int cgiMain()
 	status = cgiFormString("sdept",  sdept, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get sdept error!\n");
+		fprintf(cgiOut, "get sdept  error!\n");
 		return 1;
 	}
 
@@ -60,7 +60,7 @@ int cgiMain()
 	}
 
 
-	sprintf(sql, "update academy set acname='%s', sdept='%s'  where acno ='%s' ", acname,sdept,acno);
+	sprintf(sql, "update academy set acname='%s', sdept='%s'  where acno ='%s' ", acname, sdept, acno);
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
 		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));

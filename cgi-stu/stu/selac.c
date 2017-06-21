@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -21,26 +20,27 @@ int cgiMain()
 		    <link rel=\"stylesheet\" href=\"/stu/public/css/bootstrap.min.css\">\
 		</head>");
 
-	char scm[16] = "\0";
+	char acno[32] = "\0";
 	int status = 0;
 
-	status = cgiFormString("scm",  scm, 16);
+	status = cgiFormString("acno",  acno, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get scname error!\n");
+		fprintf(cgiOut, "get acno error!\n");
 		return 1;
 	}
 
 	int ret;
 	MYSQL *db;
 	char sql[128] = "\0";
-	if (scm[0] == '*')
+
+	if (acno[0] == '*')
 	{
-		sprintf(sql, "select * from School where scname!= '1'");
+		sprintf(sql, "select acno,acname,sdept from academy where fl is null");
 	}
 	else
 	{
-		sprintf(sql, "select * from School where scm = '%s' and scname != '1'", scm);
+		sprintf(sql, "select acno,acname,sdept from academy where acno = '%s' and fl is null", acno);
 	}
 
 
