@@ -66,7 +66,7 @@ int cgiMain()
 	 		return -1;
 	 	}
 	 }else{
-	 	sprintf(sql, "update School set scname = '1' where scm='%s' ",scm);
+	 	sprintf(sql, "update School set fl = '0' where scm='%s' ",scm);
 	 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	 	{
 	 		fprintf(cgiOut,"mysql_real_query fail22:%s\n", mysql_error(db));

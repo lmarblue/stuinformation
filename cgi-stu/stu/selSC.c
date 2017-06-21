@@ -36,11 +36,11 @@ int cgiMain()
 	char sql[128] = "\0";
 	if (scm[0] == '*')
 	{
-		sprintf(sql, "select * from School where scname!= '1'");
+		sprintf(sql, "select scm,scname,location,president from School where fl='1'");
 	}
 	else
 	{
-		sprintf(sql, "select * from School where scm = '%s' and scname != '1'", scm);
+		sprintf(sql, "select scm,scname,location,president from School where scm = '%s' and fl='1'", scm);
 	}
 
 
