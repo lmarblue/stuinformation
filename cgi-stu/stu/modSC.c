@@ -6,20 +6,14 @@
 
 int cgiMain()
 {
+
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
 
-	char  scm[16] = "\0";
-	char scname[30] = "\0";
+	char scm[16] = "\0";
+	char  scname[30]= "\0";
 	char location[20] = "\0";
   char president[10]="\0";
-	int status = 0;
-
-	status = cgiFormString("scm",  scm, 16);
-	if (status != cgiFormSuccess)
-	{
-		fprintf(cgiOut, "get scm error!\n");
-		return 1;
-	}
+  int status = 0;
 
 	status = cgiFormString("scname",  scname, 30);
 	if (status != cgiFormSuccess)
@@ -31,18 +25,16 @@ int cgiMain()
 	status = cgiFormString("location",  location, 20);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get location  error!\n");
+		fprintf(cgiOut, "get location error!\n");
 		return 1;
 	}
 
-
-	status = cgiFormString("president",  president, 20);
+	status = cgiFormString("scm",  scm, 16);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get president error!\n");
+		fprintf(cgiOut, "get scm error!\n");
 		return 1;
 	}
-
 
 	//fprintf(cgiOut, "name = %s, age = %s, stuId = %s\n", name, age, stuId);
 
@@ -52,7 +44,6 @@ int cgiMain()
 
 	//初始化
 	db = mysql_init(NULL);
-	mysql_options(db,MYSQL_SET_CHARSET_NAME,"utf8");
 	if (db == NULL)
 	{
 		fprintf(cgiOut,"mysql_init fail:%s\n", mysql_error(db));
@@ -69,29 +60,17 @@ int cgiMain()
 	}
 
 
-
-	strcpy(sql, "create table School(scm smallint  primary key,scname varchar(30) not null,location varchar(20),president varchar(10)) character set = utf8;");
+	sprintf(sql, "update School set scname='%s', location='%s' ,president='%s' where scm ='%s' ", scname, location, president,scm);
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
-		if (ret != 1)
-		{
-			fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
-			mysql_close(db);
-			return ;
-		}
-	}
-
-
-
-	sprintf(sql, "insert into School values('%s', '%s','%s','%s')", scm, scname,location,president );
-	if (mysql_real_query(db, sql, strlen(sql) + 1) != 0)
-	{
-		fprintf(cgiOut, "%s\n", mysql_error(db));
+		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
 		mysql_close(db);
 		return -1;
 	}
 
-	fprintf(cgiOut, "add School ok!\n");
+
+
+	fprintf(cgiOut, "update School ok!\n");
 	mysql_close(db);
 	return 0;
 }
