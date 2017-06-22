@@ -13,6 +13,20 @@ int cgiMain()
 	char flag[8]="\0";
 	int status=0;
 
+	FILE * fd;
+  char ch;
+  fd=fopen("head.html", "r");
+  if(fd==NULL){
+  	fprintf(cgiOut, "Cannot open file,head.html \n");
+  	return -1;
+	}
+   ch = fgetc(fd);
+   while(ch != EOF){
+   	fprintf(cgiOut, "%c", ch);
+    ch = fgetc(fd);
+	}
+   close(fd);
+
 
 	status = cgiFormString("sno",  sno, 32);
 	if (status != cgiFormSuccess)
@@ -54,7 +68,7 @@ int cgiMain()
 	 }
 	  //fprintf(cgiOut, "scm=%s ,flag=%s \n", scm,flag);
 
-	 if(flag[0]== 1){
+	 if(flag[0]== '1'){
 	 	sprintf(sql, "delete from student where sno = '%s' ", sno);
 	 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	 	{

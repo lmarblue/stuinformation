@@ -20,44 +20,43 @@ int cgiMain()
 		    <link rel=\"stylesheet\" href=\"/stu/public/css/bootstrap.min.css\">\
 		</head>");
 
-	char cno[32] = "\0";
-	int status = 0;
-	
-	FILE * fd;
-  char ch;
-  fd=fopen("head.html", "r");
-  if(fd==NULL){
-  	fprintf(cgiOut, "Cannot open file,head.html \n");
-  	return -1;
-	}
-   ch = fgetc(fd);
-   while(ch != EOF){
-   	fprintf(cgiOut, "%c", ch);
-    ch = fgetc(fd);
-	}
-   close(fd);
+    char  tno[32]="\0";
 
-	status = cgiFormString("cno",  cno, 32);
-	if (status != cgiFormSuccess)
-	{
-		fprintf(cgiOut, "get cno error!\n");
-		return 1;
-	}
+		FILE * fd;
+	  char ch;
+	  fd=fopen("head.html", "r");
+	  if(fd==NULL){
+	  	fprintf(cgiOut, "Cannot open file,head.html \n");
+	  	return -1;
+		}
+	   ch = fgetc(fd);
+	   while(ch != EOF){
+	   	fprintf(cgiOut, "%c", ch);
+	    ch = fgetc(fd);
+		}
+	   close(fd);
+    //char  cno[32]="\0";
+     	//char fl[8] = "\0";
+    //char president[10]="\0";
+  	int status = 0;
+
+  status = cgiFormString("tno",  tno, 32);
+  	if (status != cgiFormSuccess)
+  	{
+  		fprintf(cgiOut, "get tno error!\n");
+  		return 1;
+  	}
 
 	int ret;
 	MYSQL *db;
 	char sql[128] = "\0";
 
-	if (cno[0] == '*')
+	if (tno[0]!='*')
 	{
-		sprintf(sql, "select cno,cname,credit,acno from course where fl='1'");
+		sprintf(sql, "select tno,password from tuser where tno='%s' and fl='1'",tno);
+	}else{
+		sprintf(sql, "select tno,password from tuser where  fl='1'");
 	}
-	else
-	{
-		sprintf(sql, "select no,cname,credit,acno from course where cno='%s' and fl='1'", cno);
-	}
-
-
 	//初始化
 	db = mysql_init(NULL);
 	mysql_options(db,MYSQL_SET_CHARSET_NAME,"utf8");

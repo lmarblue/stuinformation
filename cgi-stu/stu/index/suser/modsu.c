@@ -9,9 +9,9 @@ int cgiMain()
 
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
 
-	char acno[32] = "\0";
-	char  acname[32]= "\0";
-	char sdept[32] = "\0";
+
+  char  sno[32]="\0";
+  char  password[32]="\0";
   int status = 0;
 
 	FILE * fd;
@@ -28,26 +28,20 @@ int cgiMain()
 	}
    close(fd);
 
-	status = cgiFormString("acno",  acno, 32);
-	if (status != cgiFormSuccess)
-	{
-		fprintf(cgiOut, "get acno error!\n");
-		return 1;
-	}
 
-	status = cgiFormString("acname",  acname, 32);
-	if (status != cgiFormSuccess)
-	{
-		fprintf(cgiOut, "get acname error!\n");
-		return 1;
-	}
+   status = cgiFormString("sno",  sno, 32);
+ 	if (status != cgiFormSuccess)
+ 	{
+ 		fprintf(cgiOut, "get sno error!\n");
+ 		return 1;
+ 	}
 
-	status = cgiFormString("sdept",  sdept, 32);
-	if (status != cgiFormSuccess)
-	{
-		fprintf(cgiOut, "get sdept  error!\n");
-		return 1;
-	}
+ 	status = cgiFormString("password",  password, 32);
+ 	if (status != cgiFormSuccess)
+ 	{
+ 		fprintf(cgiOut, "get password error!\n");
+ 		return 1;
+ 	}
 
 	//fprintf(cgiOut, "name = %s, age = %s, stuId = %s\n", name, age, stuId);
 
@@ -74,7 +68,7 @@ int cgiMain()
 	}
 
 
-	sprintf(sql, "update academy set acname='%s', sdept='%s'  where acno ='%s' ", acname, sdept, acno);
+	sprintf(sql, "update suser set password='%s'  where sno ='%s'", password,sno);
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
 		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
@@ -84,7 +78,7 @@ int cgiMain()
 
 
 
-	fprintf(cgiOut, "update academy ok!\n");
+	fprintf(cgiOut, "update suser ok!\n");
 	mysql_close(db);
 	return 0;
 }

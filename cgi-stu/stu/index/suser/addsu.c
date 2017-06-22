@@ -6,13 +6,10 @@
 
 int cgiMain()
 {
-
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
 
-	char acno[32] = "\0";
-	char  acname[32]= "\0";
-	char sdept[32] = "\0";
-  int status = 0;
+  char  sno[32]="\0";
+  char  password[32]="\0";
 
 	FILE * fd;
   char ch;
@@ -27,28 +24,23 @@ int cgiMain()
     ch = fgetc(fd);
 	}
    close(fd);
+   	//char fl[8] = "\0";
+  //char president[10]="\0";
+	int status = 0;
 
-	status = cgiFormString("acno",  acno, 32);
+	status = cgiFormString("sno",  sno, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get acno error!\n");
+		fprintf(cgiOut, "get sno error!\n");
 		return 1;
 	}
 
-	status = cgiFormString("acname",  acname, 32);
+	status = cgiFormString("password",  password, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get acname error!\n");
+		fprintf(cgiOut, "get password error!\n");
 		return 1;
 	}
-
-	status = cgiFormString("sdept",  sdept, 32);
-	if (status != cgiFormSuccess)
-	{
-		fprintf(cgiOut, "get sdept  error!\n");
-		return 1;
-	}
-
 	//fprintf(cgiOut, "name = %s, age = %s, stuId = %s\n", name, age, stuId);
 
 	int ret;
@@ -74,17 +66,29 @@ int cgiMain()
 	}
 
 
-	sprintf(sql, "update academy set acname='%s', sdept='%s'  where acno ='%s' ", acname, sdept, acno);
+
+	strcpy(sql, "create table suser(sno varchar(32) primary key, password varchar(32) not null ,fl varchar(8),foreign key (sno) references student(sno))character set = utf8;");
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
-		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
-		mysql_close(db);
-		return -1;
+		if (ret != 1)
+		{
+			fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
+			mysql_close(db);
+			return -1;
+		}
 	}
 
 
 
-	fprintf(cgiOut, "update academy ok!\n");
+	sprintf(sql, "insert into suser values('%s', '%s','1')", sno,password);
+	if (mysql_real_query(db, sql, strlen(sql) + 1) != 0)
+	{
+		fprintf(cgiOut, "%s\n", mysql_error(db));
+		mysql_close(db);
+		return -1;
+	}
+
+	fprintf(cgiOut, "add suser ok!\n");
 	mysql_close(db);
 	return 0;
 }
