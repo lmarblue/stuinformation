@@ -9,25 +9,17 @@ int cgiMain()
 
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
 
-	char cno[32]= "\0";
-  char sno[32]="\0";
+	char tno[32]= "\0";
 	char flag[8]="\0";
 	int status=0;
 
 
-	status = cgiFormString("cno",  cno, 32);
+	status = cgiFormString("tno",  tno, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get cno error!\n");
+		fprintf(cgiOut, "get tno error!\n");
 		return 1;
 	}
-
-  status = cgiFormString("sno",  sno, 32);
-  if (status != cgiFormSuccess)
-  {
-    fprintf(cgiOut, "get sno error!\n");
-    return 1;
-  }
 
 	status = cgiFormString("flag", flag, 8);
 	//fprintf(cgiOut, "flag = [%s] status=[%d]\n", flag, status);
@@ -63,7 +55,7 @@ int cgiMain()
 	  //fprintf(cgiOut, "scm=%s ,flag=%s \n", scm,flag);
 
 	 if(flag[0]== 1){
-	 	sprintf(sql, "delete from score where cno = '%s' and sno='%s' ", cno,sno);
+	 	sprintf(sql, "delete from teacher where tno = '%s' ", tno);
 	 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	 	{
 	 		fprintf(cgiOut,"mysql_real_query fail11:%s\n", mysql_error(db));
@@ -71,7 +63,7 @@ int cgiMain()
 	 		return -1;
 	 	}
 	 }else{
-	 	sprintf(sql, "update score set fl= '0' where sno='%s' and cno='%s'",sno,cno);
+	 	sprintf(sql, "update teacher set fl= '0'");
 	 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	 	{
 	 		fprintf(cgiOut,"mysql_real_query fail22:%s\n", mysql_error(db));
@@ -81,7 +73,7 @@ int cgiMain()
 	 }
 
 
-	 fprintf(cgiOut, "delete score ok!\n");
+	 fprintf(cgiOut, "delete teacher ok!\n");
 	 mysql_close(db);
 
 	return 0;
