@@ -21,6 +21,7 @@ int cgiMain()
 		</head>");
 
 	char cno[32] = "\0";
+  char  sno[32]="\0";
 	int status = 0;
 
 	status = cgiFormString("cno",  cno, 32);
@@ -30,17 +31,26 @@ int cgiMain()
 		return 1;
 	}
 
+	status = cgiFormString("sno",  sno, 32);
+	if (status != cgiFormSuccess)
+	{
+		fprintf(cgiOut, "get sno error!\n");
+		return 1;
+	}
+
 	int ret;
 	MYSQL *db;
 	char sql[128] = "\0";
 
-	if (cno[0] == '*')
+	if (cno[0] == '*' && sno[0]=='*')
 	{
-		sprintf(sql, "select cno,cname,credit,acno from course where fl='1'");
-	}
-	else
-	{
-		sprintf(sql, "select no,cname,credit,acno from course where cno='%s' and fl='1'", cno);
+		sprintf(sql, "select cno,sno,score from score where fl='1'");
+	}else if(sno[0]=='*' && cno[0]!='*'){
+		sprintf(sql, "select cno,sno,score from score where cno='%s' and fl='1'", cno);
+	}else if(cno[0]=='*' && sno[0]!='*'){
+		sprintf(sql, "select cno,sno,score from score where sno='%s' and  fl='1'", sno);
+	}else {
+		sprintf(sql, "select cno,sno,score from score where cno='%s' and fl='1' and sno='%s'", cno,sno);
 	}
 
 

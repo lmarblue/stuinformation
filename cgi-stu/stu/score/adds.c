@@ -8,10 +8,9 @@ int cgiMain()
 {
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
 
-	char  cno[32] = "\0";
-	char  cname[32] = "\0";
-	char  credit[32] = "\0";
-  char  acno[32]="\0";
+	char  score[16] = "\0";
+  char  sno[32]="\0";
+  char  cno[32]="\0";
    	//char fl[8] = "\0";
   //char president[10]="\0";
 	int status = 0;
@@ -23,24 +22,17 @@ int cgiMain()
 		return 1;
 	}
 
-	status = cgiFormString("cname",  cname, 32);
+	status = cgiFormString("sno",  sno, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get cname error!\n");
+		fprintf(cgiOut, "get sno error!\n");
 		return 1;
 	}
 
-	status = cgiFormString("credit",  credit, 32);
+	status = cgiFormString("score",  score, 16);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get credit  error!\n");
-		return 1;
-	}
-
-	status = cgiFormString("acno",  acno, 32);
-	if (status != cgiFormSuccess)
-	{
-		fprintf(cgiOut, "get acno  error!\n");
+		fprintf(cgiOut, "get score  error!\n");
 		return 1;
 	}
 
@@ -70,7 +62,7 @@ int cgiMain()
 
 
 
-	strcpy(sql, "create table course(cno varchar(32)  primary key,cname varchar(32) not null,credit varchar(32) check(credit between 1 and 5),acno varchar(32),fl varchar(8),foreign key (acno) references academy(acno))character set = utf8;");
+	strcpy(sql, "create table score(cno varchar(32) ,sno varchar(32),score varchar(16) check(score between 0 and 100),fl varchar(8),primary key(cno,sno), foreign key (cno) references course(cno),foreign key (sno) references student(sno))character set = utf8;");
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
 		if (ret != 1)
@@ -83,7 +75,7 @@ int cgiMain()
 
 
 
-	sprintf(sql, "insert into course values('%s', '%s', '%s','%s','1')", cno,cname,credit,acno );
+	sprintf(sql, "insert into score values('%s', '%s','%s','1')", cno,sno,score );
 	if (mysql_real_query(db, sql, strlen(sql) + 1) != 0)
 	{
 		fprintf(cgiOut, "%s\n", mysql_error(db));
