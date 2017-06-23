@@ -85,7 +85,7 @@ int cgiMain()
 	MYSQL_ROW  row;
 
 	if((row = mysql_fetch_row(res)) != NULL){
-		fprintf(cgiOut,"<a href=\"/index.html\">点击进入教师页面</a>");
+		fprintf(cgiOut,"<a href=\"/teainfo.html\">点击进入教师页面</a>");
 	}else{
 		fprintf(cgiOut,"<a href=\"/login_tea.html\">学号或密码错误点击重输</a>");
 	}

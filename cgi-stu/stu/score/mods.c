@@ -76,7 +76,7 @@ int cgiMain()
 	}
 
 
-	sprintf(sql, "update course set score='%s'  where cno ='%s' and sno='%s' ", score,cno,sno);
+	sprintf(sql, "update score set score='%s'  where cno ='%s' and sno='%s' ", score,cno,sno);
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
 		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));

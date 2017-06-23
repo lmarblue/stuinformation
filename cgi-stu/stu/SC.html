@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>学生信息管理系统</title>
+    <title>学校信息管理系统</title>
     <link rel="stylesheet" type="text/css" href="./public/css/bootstrap.min.css">
     <style type="text/css">
     body {
@@ -38,47 +38,47 @@
 </head>
 
 <body>
-    <h1 class="header text-center">学生信息管理系统</h1>
+    <h1 class="header text-center">学校信息管理系统</h1>
     <div class="container">
         <div class="operation row">
             <div class="text-center col-md-3 col-sm-6">
-                <button>添加School信息</button>
+                <button>添加学校信息</button>
             </div>
             <div class="text-center col-md-3 col-sm-6">
-                <button>查询School信息</button>
+                <button>查询学校信息</button>
             </div>
             <div class="text-center col-md-3 col-sm-6">
-                <button>修改School信息</button>
+                <button>修改学校信息</button>
             </div>
             <div class="text-center col-md-3 col-sm-6">
-                <button>删除School信息</button>
+                <button>删除学校信息</button>
             </div>
         </div>
         <ul class="forms">
             <li class="show">
                 <form class="form-horizontal" method="get" action="/cgi-bin/sx/addSC.cgi">
                     <div class="form-group">
-                        <label for="scm" class="col-sm-2 control-label">scm</label>
+                        <label for="scm" class="col-sm-2 control-label">学校号</label>
                         <div class="col-sm-10">
-                            <input type="text" name="scm" class="form-control" id="scm" placeholder="请输入scm">
+                            <input type="text" name="scm" class="form-control" id="scm" placeholder="请输入学校号">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="scname" class="col-sm-2 control-label">scname</label>
+                        <label for="scname" class="col-sm-2 control-label">学校名</label>
                         <div class="col-sm-10">
-                            <input type="text" name="scname" class="form-control" id="scname" placeholder="请输入scname">
+                            <input type="text" name="scname" class="form-control" id="scname" placeholder="请输入学校名">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="location" class="col-sm-2 control-label">location</label>
+                        <label for="location" class="col-sm-2 control-label">所在地</label>
                         <div class="col-sm-10">
-                            <input type="text" name="location" class="form-control" id="location" placeholder="请输入location">
+                            <input type="text" name="location" class="form-control" id="location" placeholder="请输入所在地">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="president" class="col-sm-2 control-label">president</label>
+                        <label for="president" class="col-sm-2 control-label">校长</label>
                         <div class="col-sm-10">
-                            <input type="text" name="president" class="form-control" id="president" placeholder="请输入president">
+                            <input type="text" name="president" class="form-control" id="president" placeholder="请输入校长">
                         </div>
                     </div>
                   <div class="text-center">
@@ -90,7 +90,7 @@
             <li>
                 <form class="form-horizontal" method="get" action="/cgi-bin/sx/selSC.cgi">
                     <div class="form-group">
-                        <label for="scm-sel" class="col-sm-2 control-label">输入scm</label>
+                        <label for="scm-sel" class="col-sm-2 control-label">输入学校号</label>
                         <div class="col-sm-10">
                             <input type="text" name="scm" class="form-control" id="scname-sel" placeholder="输入*查询所有">
                         </div>
@@ -104,21 +104,21 @@
             <li>
                 <form class="form-horizontal" method="get" action="/cgi-bin/sx/modSC.cgi">
                     <div class="form-group">
-                        <label for="scm-mod" class="col-sm-2 control-label">scm</label>
+                        <label for="scm-mod" class="col-sm-2 control-label">学校号</label>
                         <div class="col-sm-10">
-                            <input type="text" name="scm" class="form-control" id="scm-mod" placeholder="请输入school number">
+                            <input type="text" name="scm" class="form-control" id="scm-mod" placeholder="请输入学校号">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="scname-mod" class="col-sm-2 control-label">scname</label>
+                        <label for="scname-mod" class="col-sm-2 control-label">学校名</label>
                         <div class="col-sm-10">
-                            <input type="text" name="scname" class="form-control" id="scname-mod" placeholder="请输入school name">
+                            <input type="text" name="scname" class="form-control" id="scname-mod" placeholder="请输入学校名">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="location-mod" class="col-sm-2 control-label">location</label>
+                        <label for="location-mod" class="col-sm-2 control-label">所在地</label>
                         <div class="col-sm-10">
-                            <input type="text" name="location" class="form-control" id="location-mod" placeholder="请输入school location">
+                            <input type="text" name="location" class="form-control" id="location-mod" placeholder="请输入所在地">
                         </div>
                     </div>
                     <div class="text-center">
@@ -130,9 +130,9 @@
             <li>
                 <form class="form-horizontal" method="get" action="/cgi-bin/sx/delSC.cgi">
                     <div class="form-group">
-                        <label for="scm-del" class="col-sm-2 control-label">输入要删除的shcool id</label>
+                        <label for="scm-del" class="col-sm-2 control-label">输入要删除的学校号</label>
                         <div class="col-sm-10">
-                            <input type="text" name="scm" class="form-control" id="scm-del" placeholder="输入school id">
+                            <input type="text" name="scm" class="form-control" id="scm-del" placeholder="输入学校号">
                         </div>
                     </div>
                     <div class="form-group">
