@@ -133,6 +133,7 @@ int cgiMain()
 		fprintf(cgiOut,"</tr>");
 	}
 	fprintf(cgiOut,"</table></div>");
+	fprintf(cgiOut, "<a href=\"/sinfo.html\"><button>返回</button></a>");
 
 
 

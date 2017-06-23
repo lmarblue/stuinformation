@@ -111,6 +111,7 @@ int cgiMain()
 
 
 	fprintf(cgiOut, "update student ok!\n");
+	fprintf(cgiOut, "<a href=\"/sinfo.html\"><button>返回</button></a>");
 	mysql_close(db);
 	return 0;
 }

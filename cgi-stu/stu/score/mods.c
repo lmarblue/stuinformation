@@ -87,6 +87,7 @@ int cgiMain()
 
 
 	fprintf(cgiOut, "update score ok!\n");
+	fprintf(cgiOut, "<a href=\"/teainfo.html\"><button>返回</button></a>");
 	mysql_close(db);
 	return 0;
 }

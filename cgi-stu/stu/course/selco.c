@@ -22,7 +22,7 @@ int cgiMain()
 
 	char cno[32] = "\0";
 	int status = 0;
-	
+
 	FILE * fd;
   char ch;
   fd=fopen("head.html", "r");
@@ -123,6 +123,7 @@ int cgiMain()
 		fprintf(cgiOut,"</tr>");
 	}
 	fprintf(cgiOut,"</table></div>");
+	fprintf(cgiOut, "<a href=\"/sinfo.html\"><button>返回</button></a>");
 
 
 

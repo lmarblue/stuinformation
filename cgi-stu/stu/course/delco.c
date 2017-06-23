@@ -88,6 +88,7 @@ int cgiMain()
 
 
 	 fprintf(cgiOut, "delete course ok!\n");
+	 fprintf(cgiOut, "<a href=\"/sinfo.html\"><button>返回</button></a>");
 	 mysql_close(db);
 
 	return 0;
