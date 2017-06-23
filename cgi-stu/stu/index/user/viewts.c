@@ -20,7 +20,9 @@ int cgiMain()
 		    <link rel=\"stylesheet\" href=\"/stu/public/css/bootstrap.min.css\">\
 		</head>");
 
-    char  tno[32]="\0";
+    char  cno[32]="\0";
+
+
 
 		FILE * fd;
 	  char ch;
@@ -40,23 +42,18 @@ int cgiMain()
     //char president[10]="\0";
   	int status = 0;
 
-  status = cgiFormString("tno",  tno, 32);
+  status = cgiFormString("cno",  cno, 32);
   	if (status != cgiFormSuccess)
   	{
-  		fprintf(cgiOut, "get tno error!\n");
+  		fprintf(cgiOut, "get cno error!\n");
   		return 1;
   	}
+
 
 	int ret;
 	MYSQL *db;
 	char sql[128] = "\0";
 
-	if (tno[0]!='*')
-	{
-		sprintf(sql, "select cno,tno from tc where tno='%s' and fl='1'",tno);
-	}else{
-		sprintf(sql, "select cno,tno from tc where  fl='1'");
-	}
 	//初始化
 	db = mysql_init(NULL);
 	mysql_options(db,MYSQL_SET_CHARSET_NAME,"utf8");
@@ -75,13 +72,13 @@ int cgiMain()
 		return -1;
 	}
 
-
-	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
-	{
-		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
-		mysql_close(db);
-		return -1;
-	}
+  sprintf(sql, "select * from viewts where cno='%s'",cno);
+  if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
+  {
+    fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
+    mysql_close(db);
+    return -1;
+  }
 
 	MYSQL_RES *res;
 	res = mysql_store_result(db);
@@ -120,7 +117,7 @@ int cgiMain()
 			fprintf(cgiOut,"<td>%.*s</td>", (int)len[i], row[i]);
 		}
 		fprintf(cgiOut,"</tr>");
-		}
+	}
 	fprintf(cgiOut,"</table></div>");
 
 
