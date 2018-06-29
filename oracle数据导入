@@ -1,0 +1,22 @@
+创建一个表空间：
+create tablespace HNDAIHOU
+datafile 'D:\app\pgl\oradata\orcl\HNDAIHOU.def' size 300M      
+autoextend on next 20M maxsize unlimited logging
+extent management local autoallocate
+segment space management auto;
+
+创建用户：
+CREATE USER hndaihou
+IDENTIFIED BY "hndaihou"
+DEFAULT TABLESPACE "HNDAIHOU"
+TEMPORARY TABLESPACE "TEMP";
+grant connect to hndaihou;
+grant dba to hndaihou ;
+grant sysdba to hndaihou;
+
+select * from all_directories;
+
+--cmd执行
+impdp hndaihou/hndaihou directory=DATA_PUMP_DIR dumpfile=hndh_20180610.dmp logfile=imp_20180620.log remap_schema=hndaihou:hndaihou remap_tablespace=HNDAIHOU:HNDAIHOU table_exists_action=replace
+
+
