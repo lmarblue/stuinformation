@@ -20,3 +20,10 @@ select * from all_directories;
 impdp hndaihou/hndaihou directory=DATA_PUMP_DIR dumpfile=hndh_20180610.dmp logfile=imp_20180620.log remap_schema=hndaihou:hndaihou remap_tablespace=HNDAIHOU:HNDAIHOU table_exists_action=replace
 
 
+查询数据库字符集：
+select userenv('language') from dual; 
+select * from v$nls_parameters;
+
+修改字符集：
+https://www.cnblogs.com/jay-xu33/p/5210098.html
+
