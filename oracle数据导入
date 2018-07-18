@@ -31,5 +31,8 @@ https://www.cnblogs.com/jay-xu33/p/5210098.html
 exp hndaihou/hndaihou@192.168.26.59:1521/orcl file=d:\hndaihou20180707.dmp 
 tables=(tb_comp_cust,tb_comp_overd,tb_comp_check_infor,tb_comp_warn)
 
+数据库表的导入：
+impdp hndaihou/hndaihou@192.168.26.59:1521/orcl DIRECTORY=DATA_PUMP_DIR DUMPFILE=HNDAIHOU20180717.DMP  table_exists_action = replace
+//HNDAIHOU20180717.DMP要在你的安装路径下(用SELECT * from dba_directories可以查到安装目录)
 
 
