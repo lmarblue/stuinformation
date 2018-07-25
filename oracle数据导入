@@ -32,7 +32,9 @@ exp hndaihou/hndaihou@192.168.26.59:1521/orcl file=d:\hndaihou20180707.dmp
 tables=(tb_comp_cust,tb_comp_overd,tb_comp_check_infor,tb_comp_warn)
 
 数据库表的导入：
-impdp hndaihou/hndaihou@192.168.26.59:1521/orcl DIRECTORY=DATA_PUMP_DIR DUMPFILE=HNDAIHOU20180717.DMP  table_exists_action = replace
+impdp hndaihou/hndaihou@192.168.26.59:1521/orcl  directory=DATA_PUMP_DIR dumpfile=hndaihou20180720.dmp logfile=imp_20180620.log remap_schema=hndaihou:hndaihou remap_tablespace=TBS_DAIHOU:HNDAIHOU table_exists_action=replace
+//remap_schema当你从A用户导出的数据，想要导入到B用户中去，就使用这个：remap_schema=A:B
+//remap_tablespace 与上面类似，数据库对象本来存在于tbs_a表空间，现在你不想放那儿了，想换到tbs_b，就用这个remap_tablespace=tbs_a:tbs_b  结果是所有tbs_a中的对象都会建在tbs_b表空间中
 //HNDAIHOU20180717.DMP要在你的安装路径下(用SELECT * from dba_directories可以查到安装目录)
 
 
